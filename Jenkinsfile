@@ -1,13 +1,16 @@
 pipeline {
     agent any
 
+    environment {
+        OUTPUT_FILE = "output.txt"
+    }
+
     stages {
 
         stage('Checkout') {
             steps {
                 echo 'Cloning repository...'
-                // If using Git:
-                // git 'https://github.com/your-repo.git'
+                git 'https://github.com/Kdmodder/armstrong-project'
             }
         }
 
@@ -18,9 +21,9 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Run') {
             steps {
-                echo 'Running the program...'
+                echo 'Running program...'
                 sh 'java ArmstrongNumbers > output.txt'
             }
         }
@@ -36,6 +39,9 @@ pipeline {
     post {
         success {
             echo 'Pipeline executed successfully!'
+
+            // ✅ Save output as artifact
+            archiveArtifacts artifacts: 'output.txt', fingerprint: true
         }
         failure {
             echo 'Pipeline failed!'
