@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Cloning repository...'
-                git 'https://github.com/Kdmodder/armstrong-project'
+                git branch: 'main', url: 'https://github.com/Kdmodder/armstrong-project'
             }
         }
 
